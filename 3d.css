@@ -5,7 +5,7 @@ section.story section.sheet {
   margin: 1em;
   position: relative;
   -webkit-transform: rotate3d(0,1,0, 0deg);
-  -webkit-transition: -webkit-transform 1s ease-in-out;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
   -webkit-trans }
   section.story section.sheet > * {
     position: absolute;
@@ -13,7 +13,7 @@ section.story section.sheet {
   }
   section.story section.sheet > .front {
     -webkit-transform: translateZ(2px);
-    -webkit-transition: -webkit-transform 1s ease-in-out; }
+    -webkit-transition: -webkit-transform 0.3s ease-in-out; }
   section.story section.sheet > .back {
     -webkit-transform: rotate3d(0,1,0, -180deg); }
 
@@ -21,6 +21,9 @@ section.story section.sheet.flipped {
   -webkit-transform: rotate3d(0,1,0, -180deg); }
   section.story section.sheet.flipped > .front {
     -webkit-transform: translateZ(-2px); }
+
+section.story section.sheet:first-child { -webkit-transition-duration: 1.0s; }
+section.story section.sheet:first-child > .front { -webkit-transition-duration: 1.0s; }
 
 section.story section.cover {
   width: 20em;
