@@ -1,0 +1,66 @@
+body {
+  background: #999faa url("images/linen.jpg");
+}
+
+header#main {
+  font: normal italic 1.5em "Hoefler Text";
+  margin: 1em; }
+  header#main h1 {
+    font-weight: normal;
+    text-align: center;
+/*    text-shadow: 0 2px 4px white;*/
+  }
+
+
+section.story {
+  width: 30em;
+  margin: 1em auto;
+  font: 24px normal "Goudy Bookletter 1911";
+  color: #433;
+}
+
+section.page {
+  position: relative;
+  border: 1px solid #ccc;
+  border-color: #ccc #ccc hsl(20, 10%, 50%) hsl(20, 10%, 50%);
+  background: #ece1cc;
+  background-image: 
+    -webkit-gradient(linear, left top, 10% top,
+      from(hsla(20, 10%, 50%, 0.6)), to(hsla(0, 10%, 50%, 0.0)) ),
+    -webkit-gradient(linear, right top, right 20,
+      from(hsla(20, 10%, 50%, 0.2)), to(hsla(0, 10%, 50%, 0.0)) ),
+    -webkit-gradient(linear, right top, 90% top,
+      from(hsla(20, 10%, 50%, 0.2)), to(hsla(0, 10%, 50%, 0.0)) );
+  padding: 3em 4em;
+  margin: 0;
+  box-shadow: 0.5em 1em 1em rgba(0,0,0, 0.2); }
+  section.page p {
+    line-height: 1.8; }
+  section.page .pagenum {
+    position: absolute;
+    left: -4em;
+    top: 2em;
+    width: 100%;
+    text-align: right; }
+
+#prologue {
+  background: #ece1cc url("images/prologue.jpg") right bottom no-repeat;
+  background-image: 
+    -webkit-gradient(linear, left top, 10% top,
+      from(hsla(20, 10%, 50%, 0.6)), to(hsla(0, 10%, 50%, 0.0)) ),
+    -webkit-gradient(linear, right top, right 20,
+      from(hsla(0, 10%, 50%, 0.15)), to(hsla(0, 10%, 50%, 0.0)) ),
+    -webkit-gradient(linear, right top, 90% top,
+      from(hsla(0, 10%, 50%, 0.2)), to(hsla(0, 10%, 50%, 0.0)) ),
+    url("images/prologue.jpg");
+  ;
+}
+
+.filler {
+  float: right;
+  border: 1px solid blue;
+}
+
+.offset {
+  position: relative;
+}
