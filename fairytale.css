@@ -3,7 +3,9 @@ body {
 }
 
 header#main {
-  font: normal italic 1.5em "Hoefler Text";
+  font-weight: normal
+  font-variant: italic
+  font-size: 1.5em;
   margin: 1em; }
   header#main h1 {
     font-weight: normal;
@@ -12,36 +14,75 @@ header#main {
   }
 
 
-section.story {
-  width: 30em;
+section.book {
+  width: 24.5em;
   margin: 1em auto;
-  font: 24px normal "Goudy Bookletter 1911";
-  color: #433;
-}
-
-section.page {
-  position: relative;
-  border: 1px solid #ccc;
-  border-color: #ccc #ccc hsl(20, 10%, 50%) hsl(20, 10%, 50%);
-  background: #ece1cc;
-  background-image: 
-    -webkit-gradient(linear, left top, 10% top,
-      from(hsla(20, 10%, 50%, 0.6)), to(hsla(0, 10%, 50%, 0.0)) ),
-    -webkit-gradient(linear, right top, right 20,
-      from(hsla(20, 10%, 50%, 0.2)), to(hsla(0, 10%, 50%, 0.0)) ),
-    -webkit-gradient(linear, right top, 90% top,
-      from(hsla(20, 10%, 50%, 0.2)), to(hsla(0, 10%, 50%, 0.0)) );
-  padding: 3em 4em;
-  margin: 0;
-  box-shadow: 0.5em 1em 1em rgba(0,0,0, 0.2); }
-  section.page p {
-    line-height: 1.8; }
-  section.page .pagenum {
+  font: 22px normal "Goudy Bookletter 1911", "Times New Roman";
+  color: #433; }
+  section.book section.sheet {
+    margin: 1em;
     position: absolute;
-    left: -4em;
-    top: 2em;
-    width: 100%;
-    text-align: right; }
+    left: 0;
+    top: 0;
+    width: 22.5em;
+    height: 28em; }
+    section.book section.sheet > * {
+      position: absolute;
+      top: 0;
+    }
+
+  section.book section.cover {
+    width: 14.5em;
+    height: 22em;
+    padding: 3em 4em;
+    border: 1px solid hsla(0,0%,0%, 0.2);
+    background: hsl(120, 50%, 70%) url("images/leather_tile_250.jpg");
+    background-image: 
+      -webkit-gradient(linear, left top, right top,
+        from(hsla(0,0%,0%, 0.2)), 
+        color-stop(0.02, hsla(0,0%,0%, 0.1)),
+        color-stop(0.04, hsla(0,0%,0%, 0.25)),
+        color-stop(0.045, hsla(0,0%,0%, 0.0)),
+        color-stop(0.995, hsla(0,0%,0%, 0.0)),
+        to(hsla(0,0%,0%, 0.3)) ),
+      url("images/leather_tile_250.jpg");
+    }
+    section.book section.cover h1 {
+      margin: 0;
+      text-align: center;
+      text-shadow: 1px 1px 0 hsla(0, 0%, 100%, 0.3);
+      font-size: 4em; }
+    
+  section.book section.page {
+    width: 14em;
+    height: 21em; 
+    top: 0.5em;
+    border: 1px solid #ccc;
+    border-color: #ccc #ccc hsl(20, 10%, 50%) hsl(20, 10%, 50%);
+    background: #ece1cc;
+    background-image: 
+      -webkit-gradient(linear, left top, 10% top,
+        from(hsla(20, 10%, 50%, 0.6)), to(hsla(0, 10%, 50%, 0.0)) ),
+      -webkit-gradient(linear, right top, right 20,
+        from(hsla(20, 10%, 50%, 0.2)), to(hsla(0, 10%, 50%, 0.0)) ),
+      -webkit-gradient(linear, right top, 90% top,
+        from(hsla(20, 10%, 50%, 0.2)), to(hsla(0, 10%, 50%, 0.0)) );
+    padding: 3em 4em;
+    margin: 0;
+    box-shadow: 0.5em 1em 1em rgba(0,0,0, 0.2); }
+    section.book section.page h1 {
+      font-size: 2em; }
+    section.book section.page p {
+      line-height: 1.8; }
+    section.book section.page .pagenum {
+      position: absolute;
+      left: -4em;
+      top: 2em;
+      width: 100%;
+      text-align: right; }
+
+  section.book section.page.title {
+    text-align: center; }
 
 #prologue {
   background: #ece1cc url("images/prologue.jpg") right bottom no-repeat;
@@ -63,4 +104,40 @@ section.page {
 
 .offset {
   position: relative;
+}
+
+
+
+/*************************************************************************
+ * 3D TRANSFORMS
+ *
+ * A section.book represents a physical book. It has a number of sheets,
+ * each of which has a front and a back. The front and back can be either
+ * a cover or a page. */
+
+section.book {
+  -webkit-transition: -webkit-transform 1.5s ease-in-out;
+  -webkit-transform: translate(0) scale(0.5);
+  -webkit-perspective: 1400; }
+  section.book section.sheet {
+    -webkit-transform: rotate3d(0,1,0, 0deg);
+    -webkit-transform-origin: 0 0;
+    -webkit-transition: -webkit-transform 0.8s ease-in-out;
+    -webkit-trans }
+    section.book section.sheet > .front {
+      -webkit-transform: translateZ(1px);
+      -webkit-transition: -webkit-transform 0.8s ease-in-out; }
+    section.book section.sheet > .back {
+      -webkit-transform: rotate3d(0,1,0, -180deg); }
+
+  section.book section.sheet.flipped {
+    -webkit-transform: translate(-22.5em) rotate3d(0,1,0, -180deg); }
+    section.book section.sheet.flipped > .front {
+      -webkit-transform: translateZ(-1px); }
+
+  section.book section.sheet:first-child { -webkit-transition-duration: 1.5s; }
+  section.book section.sheet:first-child > .front { -webkit-transition-duration: 1.5s; }
+
+section.book.opened {
+  -webkit-transform: translate(11.25em) scale(1.0);
 }
