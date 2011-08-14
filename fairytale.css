@@ -135,29 +135,25 @@ section.book {
  * a cover or a page. */
 
 section.book {
+  // transform-style tip from http://code.google.com/p/chromium/issues/detail?id=84720
+  -webkit-transform-style: preserve-3d;
   -webkit-transition: -webkit-transform 1.5s ease-in-out;
   -webkit-transform: translate(0) scale(0.5);
   -webkit-perspective: 1400; }
   section.book section.sheet {
+    -webkit-transform-style: preserve-3d;
     -webkit-transform: rotate3d(0,1,0, 0deg);
     -webkit-transform-origin: 0 0;
     -webkit-transition: -webkit-transform 0.8s ease-in-out;
     -webkit-trans }
     section.book section.sheet > .front {
-      z-index: 3;
       -webkit-transform: translateZ(0);
       -webkit-transition: -webkit-transform 0.8s ease-in-out; }
     section.book section.sheet > .back {
-      z-index: 2;
       -webkit-transform: translateZ(-1px) rotate3d(0,1,0, -180deg); }
 
   section.book section.sheet.flipped {
     -webkit-transform: translate(-22.5em) rotate3d(0,1,0, -180deg); }
-    section.book section.sheet.flipped > .front {
-      z-index: 2;
-      -webkit-transform: translateZ(-2px); }
-    section.book section.sheet.flipped > .back {
-      z-index: 3; }
 
   section.book section.sheet:first-child { -webkit-transition-duration: 1.5s; }
   section.book section.sheet:first-child > .front { -webkit-transition-duration: 1.5s; }
