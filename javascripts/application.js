@@ -17,7 +17,7 @@ $(function() {
       if ($leftPage) {
         $leftPage.css({
           "-webkit-transform": "translateZ(0) rotate3d(0,1,0, -180deg)",
-          "z-index": "1"
+          "z-index": "2"
         });
       }
       // Move right page slightly back
@@ -52,7 +52,7 @@ $(function() {
       if ($rightPage) {
         $rightPage.css({
           "-webkit-transform": "translateZ(0)",
-          "z-index": "1"
+          "z-index": "2"
         });
       }
       $leftPage = $this;
