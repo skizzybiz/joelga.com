@@ -1,73 +1,95 @@
 $(function() {
-  $book = $('.book');
-  var pages = $book.children().length; // assumes only one book
-  var pagesFlipped = 0;
+  $book = $('.book'); // Assumes only one book on the page
   var $leftPage = null;
   var $rightPage = $($book.children()[0]);
   
-  $book.children('.sheet').click(function() {
-    var $this = $(this);
-    if ($this.hasClass("flipped")) {
-      ///////////////////////////////////////////////////////
-      // Flipping back (page moves to the right)
-      pagesFlipped--;
-      
-      // Move left page to front
-      $leftPage = $this.prev();
-      if ($leftPage) {
-        $leftPage.css({
-          "-webkit-transform": "translateZ(0) rotate3d(0,1,0, -180deg)",
-          "z-index": "2"
-        });
-      }
-      // Move right page slightly back
-      if ($rightPage) {
-        $rightPage.css({
-          "-webkit-transform": "translateZ(-3px)",
-          "z-index": "1"
-        });
-      }
-      $rightPage = $this;
-
-      // Flip it to the right
-      $this.css({
-        "-webkit-transform": "translateZ(0)",
-        "z-index": "2"
-      });
-      $this.removeClass("flipped");
+  ///////////////////////////////////////////////////////
+  // Flipping forward (page moves to the left)
+  function flipForward() {
+    if (!$rightPage) return;
+    $page = $rightPage;
     
-    } else { 
-      ///////////////////////////////////////////////////////
-      // Flipping forward (page moves to the left)
-      pagesFlipped++;
-      // Move left page slightly back
-      if ($leftPage) {
-        $leftPage.css({
-          "-webkit-transform": "translateZ(-3px) rotate3d(0,1,0, -180deg)",
-          "z-index": "1"
-        });
-      }
-      // Move right page to the front
-      $rightPage = $this.next();
-      if ($rightPage) {
-        $rightPage.css({
-          "-webkit-transform": "translateZ(0)",
-          "z-index": "2"
-        });
-      }
-      $leftPage = $this;
-
-      // Flip it to the left
-      $this.css({
-        "-webkit-transform": "translateZ(0) rotate3d(0,1,0, -180deg)",
-        "z-index": "2"
+    // Move left page slightly back
+    if ($leftPage) {
+      $leftPage.css({
+        "-webkit-transform": "translateZ(-3px) rotate3d(0,1,0, -180deg)",
+        "z-index": "1"
       });
-      $this.addClass("flipped");
     }
+    // Move right page to the front
+    $rightPage = $page.next();
+    if ($rightPage) {
+      $rightPage.css({
+        "-webkit-transform": "translateZ(0)",
+        "z-index": "4"
+      });
+    }
+    $leftPage = $page;
+
+    // Flip it to the left
+    $page.css({
+      "-webkit-transform": "translateZ(0) rotate3d(0,1,0, -180deg)",
+      "z-index": "4"
+    });
+    $page.addClass("flipped");
     
-    if ($($this.children()[0]).hasClass("cover") ) { // if first child is the cover
+    toggleOpenedIfCover($page);
+  }
+  
+  ///////////////////////////////////////////////////////
+  // Flipping back (page moves to the right)
+  function flipBack() {
+    if (!$leftPage) return;
+    $page = $leftPage;
+    
+    // Move left page to front
+    $leftPage = $page.prev();
+    if ($leftPage) {
+      $leftPage.css({
+        "-webkit-transform": "translateZ(0) rotate3d(0,1,0, -180deg)",
+        "z-index": "4"
+      });
+    }
+    // Move right page slightly back
+    if ($rightPage) {
+      $rightPage.css({
+        "-webkit-transform": "translateZ(-3px)",
+        "z-index": "1"
+      });
+    }
+    $rightPage = $page;
+
+    // Flip it to the right
+    $page.css({
+      "-webkit-transform": "translateZ(0)",
+      "z-index": "4"
+    });
+    $page.removeClass("flipped");
+    
+    toggleOpenedIfCover($page);
+  }
+  
+  // Checks the page to see if it's the front cover, and if so, opens or
+  // closes the book.
+  function toggleOpenedIfCover($page) {
+    if ($($page.children()[0]).hasClass("cover") ) { // if first child is the cover
       // Open or close the book
-      $($this.parent()).toggleClass("opened", $this.hasClass("flipped"));
+      $($page.parent()).toggleClass("opened", $page.hasClass("flipped"));
+    }
+  }
+  
+  // Click handlers for sheets
+  $book.children('.sheet').click(function() {
+    if ($(this).hasClass("flipped")) flipBack();
+    else flipForward();
+  });
+  
+  // Left and right arrow keyboard handlers
+  $(document).keyup(function(event) {
+    if (event.keyCode == '39') {
+      flipForward();
+    } else if (event.keyCode == '37') {
+      flipBack();
     }
   });
 });
